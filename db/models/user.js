@@ -1,7 +1,7 @@
 'use strict';
 const {Model} = require('sequelize');
-
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -26,9 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       })
     }
 
-    checkPassword = (password) => {
-      return bcrypt.compareSync(password, this.password)
-    }
+    checkPassword = (password) => bcrypt.compareSync(password, this.password);
 
     static authenticate = async ({ username, password }) => {
       try {
@@ -44,6 +42,18 @@ module.exports = (sequelize, DataTypes) => {
       } catch(err) {
         return Promise.reject(err.message)
       }
+    }
+
+    generateToken = () => {
+      const payLoad = {
+        id: this.id,
+        username: this.username
+      }
+
+      const secretKey = 'strong-secret';
+
+      const token = jwt.sign(payLoad, secretKey, { expiresIn: '24h' });
+      return token;
     }
   };
   User.init({

@@ -8,20 +8,18 @@ const homeController = require('../controllers/home.controller');
 const {restrict} = require('../middlewares/restrict')
 
 // Homepage
-router.get('/', restrict, homeController.showIndexPage)
+router.get('/api/v1/', restrict, homeController.index)
 
-// Register Page
-router.get('/register', authController.showRegisterPage);
-router.post('/register', authController.register);
+// Register
+router.post('/api/v1/auth/register', authController.register);
 
-// Login Page
-router.get('/login', authController.showLoginPage);
-router.post('/login', authController.login);
+// Login
+router.post('/api/v1/auth/login', authController.login);
 
 // Whoami page
-router.get('/whoami', restrict, authController.whoami);
+router.get('/api/v1/auth/whoami', restrict, authController.whoami);
 
 // Logout
-router.post('/logout', restrict, authController.logout);
+router.post('/api/v1/auth/logout', restrict, authController.logout);
 
 module.exports = router;

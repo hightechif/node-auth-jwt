@@ -1,7 +1,7 @@
-const showIndexPage = (req, res) => {
-  res.render('index');
+const index = (req, res) => {
+  res.status(200).json({message: 'Welcome to our API'});
 }
 
 module.exports = {
-  showIndexPage
+  index
 }

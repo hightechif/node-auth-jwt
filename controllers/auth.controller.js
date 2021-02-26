@@ -1,57 +1,45 @@
-const passport = require('passport');
+// const passport = require('passport');
 const {User} = require('../db/models');
 
 const register = (req, res, next) => {
   User.register(req.body)
-    .then(() => {
-      res.redirect('/login');
+    .then((user) => {
+      console.log(user);
+      res.status(200).json(user);
     })
     .catch((error) => next(error.message))
-  
-  // Another way
-  // const {username, password} = req.body;  
-  
-  // const encryptedPassword = bcrypt.hashSync(password, 10);
-  // User.create({
-  //   username,
-  //   password: encryptedPassword
-  // }).then(() => {
-  //       res.redirect('/login');
-  // }).catch((error) => next(error.message))
 };
 
-const showRegisterPage = (req, res) => {
-  res.render('register');
-}
-
-const showLoginPage = (req, res) => {
-  res.render('login');
-}
-
-const login =  (req, res, next) => {
-  return passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true,
-    successFlash: true
-  })(req, res, next)
+const login =  (req, res) => {
+  User.authenticate(req.body)
+    .then(user => {
+      dataUser = {
+        id: user.id,
+        username: user.username,
+        token: user.generateToken()
+      }
+      res.status(200).json(dataUser)
+    })
+    .catch(error => {
+      return next(error.message)
+    })
 }
 
 const whoami = (req, res) => {
   /* req.user adalah instance dari User Model, hasil autentikasi dari passport. */
   console.log(req);
-  res.render('profile', req.user.dataValues)
+  res.status(200).json(req.user);
+  // res.render('profile', req.user.dataValues)
 }
 
 const logout = (req, res) => {
-  req.logout();
-  res.redirect('/login');
+  // req.logout();
+  // res.redirect('/login');
+  res.status(200);
 }
 
 module.exports = {
   register,
-  showRegisterPage,
-  showLoginPage,
   login,
   whoami,
   logout
