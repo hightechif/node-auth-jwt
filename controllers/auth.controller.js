@@ -10,7 +10,7 @@ const register = (req, res, next) => {
     .catch((error) => next(error.message))
 };
 
-const login =  (req, res) => {
+const login =  (req, res, next) => {
   User.authenticate(req.body)
     .then(user => {
       dataUser = {
