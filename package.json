@@ -2,10 +2,10 @@
   "name": "node-auth-jwt",
   "version": "1.0.0",
   "description": "NodeJS authentication app with JWT strategy using passport.js",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
   },
   "keywords": [
     "auth",
@@ -15,7 +15,11 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "debug": "^4.3.2",
     "express": "^4.17.1",
+    "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
