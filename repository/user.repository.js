@@ -26,15 +26,15 @@ const signIn = (req, res, next) => {
 
 const getUser = (req, res, next) => {
     /* req.user adalah instance dari User Model, hasil autentikasi dari passport. */
-    console.log(req);
     res.status(200).json(req.user);
     /* res.render('profile', req.user.dataValues) */
 }
 
 const signOut = (req, res, next) => {
     // req.logout();
-    // res.redirect('/login');
-    res.status(200);
+    res.status(200).json({
+        "status": "Logout Success"
+    });
 }
 
 module.exports = {
