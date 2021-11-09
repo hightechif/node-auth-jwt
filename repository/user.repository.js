@@ -3,7 +3,6 @@ const { User } = require('../db/models');
 const addUser = (req, res, next) => {
     User.register(req.body)
         .then((user) => {
-            console.log(user);
             res.status(200).json(user);
         })
         .catch((error) => next(error.message))
